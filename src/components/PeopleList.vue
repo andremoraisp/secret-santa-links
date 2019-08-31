@@ -1,30 +1,30 @@
 <template>
   <div class="people-list">
     <div class="people-container">
-      <div class="person" v-if="people.length == 0">Your list seems a little empty =(</div>
+      <div class="person" v-if="people.length == 0">{{ $t('peopleList.message.empty') }}</div>
       <div class="person" v-for="(person, index) in people" :key="index">
         <div class="form-element-inline">
-          <label :for="'input-name-'+index">Name</label>
+          <label :for="'input-name-'+index">{{ $t('peopleList.input.name') }}</label>
           <input :id="'input-name-'+index" type="text" :value="person.Name" />
         </div>
         <div class="form-element-inline">
-          <label :for="'input-whatsapp-'+index">Whatsapp</label>
+          <label :for="'input-whatsapp-'+index">{{ $t('peopleList.input.whatsapp') }}</label>
           <input :id="'input-whatsapp-'+index" type="text" :value="person.Whatsapp" />
         </div>
         <div class="form-element-inline">
-          <label :for="'input-email-'+index">E-mail</label>
+          <label :for="'input-email-'+index">{{ $t('peopleList.input.email') }}</label>
           <input :id="'input-email-'+index" type="text" :value="person.EmailAddress" />
         </div>
-        <button class="remove-person-btn" @click="removePerson(person, index)">- Remove</button>
+        <button class="remove-person-btn" @click="removePerson(person, index)">- {{ $t('peopleList.button.remove') }}</button>
       </div>
     </div>
-    <button class="add-person-btn" @click="addPerson()">+ Add person</button>
+    <button class="add-person-btn" @click="addPerson()">+ {{ $t('peopleList.button.add') }}</button>
   </div>
 </template>
 
 <script lang='ts'>
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import Person from '../models/Person';
+import Person from '@/models/Person';
 
 @Component
 export default class PeopleList extends Vue {
