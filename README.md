@@ -1,4 +1,7 @@
 # secret-santa-links
+
+[![Build Status](https://andrepompermayer.visualstudio.com/secret-santa-links/_apis/build/status/secret-santa-links?branchName=master)](https://andrepompermayer.visualstudio.com/secret-santa-links/_build/latest?definitionId=1&branchName=master)
+
 Registration-free Secret Santa generator.
 
 ## Project setup
