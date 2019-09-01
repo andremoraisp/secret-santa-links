@@ -3,7 +3,7 @@
     Language:
     <div
       class="language"
-      v-for="lang in availableLanguages"
+      v-for="lang in displayableLanguages"
       :key="lang"
       @click="setLanguage(lang)"
     >{{ lang }}</div>
@@ -13,11 +13,11 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import i18n from '@/plugins/i18n/i18n';
+import { i18n, displayableLanguages } from '@/plugins/i18n';
 
 @Component({})
 export default class LanguageSelector extends Vue {
-  public availableLanguages: string[] = ['en', 'pt'];
+  public displayableLanguages: string[] = displayableLanguages;
 
   public setLanguage(lang: string) {
     i18n.locale = lang;
