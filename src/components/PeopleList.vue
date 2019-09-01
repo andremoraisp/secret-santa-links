@@ -5,38 +5,37 @@
       <div class="person" v-for="(person, index) in people" :key="index">
         <div class="form-element-inline">
           <label :for="'input-name-'+index">{{ $t('peopleList.input.name') }}</label>
-          <input :id="'input-name-'+index" type="text" :value="person.Name" />
+          <input
+            :id="'input-name-'+index"
+            type="text"
+            v-model="person.Name"
+            @change="updatePerson(person)"
+          />
         </div>
-        <div class="form-element-inline">
-          <label :for="'input-whatsapp-'+index">{{ $t('peopleList.input.whatsapp') }}</label>
-          <input :id="'input-whatsapp-'+index" type="text" :value="person.Whatsapp" />
-        </div>
-        <div class="form-element-inline">
-          <label :for="'input-email-'+index">{{ $t('peopleList.input.email') }}</label>
-          <input :id="'input-email-'+index" type="text" :value="person.EmailAddress" />
-        </div>
-        <button class="remove-person-btn" @click="removePerson(person, index)">- {{ $t('peopleList.button.remove') }}</button>
+        <button
+          class="remove-person-btn"
+          @click="removePerson(person)"
+        >- {{ $t('peopleList.button.remove') }}</button>
       </div>
     </div>
-    <button class="add-person-btn" @click="addPerson()">+ {{ $t('peopleList.button.add') }}</button>
+    <button class="add-person-btn" @click="addNewPerson()">+ {{ $t('peopleList.button.add') }}</button>
   </div>
 </template>
 
 <script lang='ts'>
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { State, Mutation, Getter } from 'vuex-class';
 import Person from '@/models/Person';
+import DrawState from '@/store/modules/draw/DrawState';
+import { namespace, Draw } from '@/store/modules/draw';
+import store from '../store';
 
 @Component
 export default class PeopleList extends Vue {
-  private people: Person[] = [];
-
-  public addPerson() {
-    this.people.push(new Person());
-  }
-
-  public removePerson(person: Person, index: number) {
-    this.people.splice(index, 1);
-  }
+  @State((state) => state.people, { namespace }) public people!: Person[];
+  @Mutation('addNewPerson', { namespace }) public addNewPerson!: void;
+  @Mutation('updatePerson', { namespace }) public updatePerson!: void;
+  @Mutation('removePerson', { namespace }) public removePerson!: void;
 }
 </script>
 
