@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Welcome />
     <LanguageSelector />
     <Result v-if="hasResult" />
     <div v-else>
@@ -15,11 +16,13 @@ import PeopleList from '@/components/PeopleList.vue';
 import LanguageSelector from '@/components/LanguageSelector.vue';
 import Drawer from '@/components/Drawer.vue';
 import Result from '@/components/Result.vue';
+import Welcome from '@/components/Welcome.vue';
 import { namespace as drawResultNamespace } from '@/store/modules/drawResult/index';
 import { Getter } from 'vuex-class';
 
 @Component({
   components: {
+    Welcome,
     LanguageSelector,
     PeopleList,
     Drawer,

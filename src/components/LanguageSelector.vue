@@ -1,6 +1,5 @@
 <template>
   <div>
-    Language:
     <div
       class="language"
       v-for="lang in displayableLanguages"
