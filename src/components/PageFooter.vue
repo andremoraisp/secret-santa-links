@@ -48,13 +48,17 @@ export default class PageFooter extends Vue {}
     }
   }
   .left {
-    float: left;
     * + * {
       margin-left: 20px;
     }
+    @media (min-width: 750px) {
+      float: left;
+    }
   }
   .right {
-    float: right;
+    @media (min-width: 750px) {
+      float: right;
+    }
   }
   &::after {
     content: "";

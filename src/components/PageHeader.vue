@@ -1,13 +1,11 @@
 <template>
   <div class="header-container">
-    <div class="header-content">
-      <div class="header-title font-christmas">Secret Santa</div>
-      <div class="toys">
-        <img class="globe" src="/svg/035-snow-globe.svg" width="50" />
-        <img class="sled" src="/svg/048-sled.svg" width="50" />
-        <img class="wreath" src="/svg/034-christmas-wreath.svg" width="60" />
-        <img class="gift" src="/svg/011-gift.svg" width="50" />
-      </div>
+    <div class="header-title font-christmas">Secret Santa</div>
+    <div class="toys">
+      <img class="globe" src="/svg/035-snow-globe.svg" width="50" />
+      <img class="sled" src="/svg/048-sled.svg" width="50" />
+      <img class="wreath" src="/svg/034-christmas-wreath.svg" width="60" />
+      <img class="gift" src="/svg/011-gift.svg" width="50" />
     </div>
   </div>
 </template>
@@ -23,39 +21,49 @@ export default class PageHeader extends Vue {}
 .header-container {
   background-color: #ffe0b1;
   height: 70px;
-  padding-left: 50px;
   padding-top: 15px;
+  position: relative;
 
   border-bottom: 4px solid #bd987b;
 
-  .header-content {
-    position: relative;
+  @media (max-width: 550px) {
+    height: 140px;
+  }
 
-    .header-title {
-      font-size: 32px;
-      font-weight: bold;
+  .header-title {
+    display: inline-block;
+    font-size: 32px;
+    font-weight: bold;
+    padding-left: 50px;
+    @media (max-width: 550px) {
+      margin: auto;
+    }
+  }
+
+  .toys {
+    position: absolute;
+    bottom: -6px;
+    left: 230px;
+
+    @media (max-width: 550px) {
+      left: unset;
+      right: 30px;
     }
 
-    .toys {
-      position: absolute;
-      bottom: -14px;
-      left: 200px;
+    & > * + * {
+      margin-left: 10px;
+    }
 
-      & > * + * {
-        margin-left: 10px;
-      }
+    & > * {
+      position: relative;
+    }
 
-      & > * {
-        position: relative;
-      }
+    .sled {
+      bottom: -7px;
+    }
 
-      .sled {
-        bottom: -7px;
-      }
-
-      .wreath {
-        bottom: -50px;
-      }
+    .wreath {
+      bottom: -50px;
     }
   }
 }
@@ -95,7 +103,8 @@ export default class PageHeader extends Vue {}
   0% {
     transform: rotateZ(0deg);
   }
-  1%, 1.2% {
+  1%,
+  1.2% {
     transform: rotateZ(-7deg);
   }
   2% {
