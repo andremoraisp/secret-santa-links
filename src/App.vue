@@ -1,36 +1,37 @@
 <template>
   <div id="app">
-    <Welcome />
-    <LanguageSelector />
-    <Result v-if="hasResult" />
-    <div v-else>
-      <PeopleList />
-      <Drawer />
+    <PageHeader id="page-header" />
+
+    <img class="sneaky-santa" src="/svg/santa-claus.svg" />
+
+    <div id="page-content">
+      <template v-if="hasResult"></template>
+      <template v-else>
+        <Drawer />
+      </template>
     </div>
+
+    <PageFooter id="page-footer" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import PeopleList from '@/components/PeopleList.vue';
-import LanguageSelector from '@/components/LanguageSelector.vue';
+import PageHeader from '@/components/PageHeader.vue';
+import PageFooter from '@/components/PageFooter.vue';
 import Drawer from '@/components/Drawer.vue';
-import Result from '@/components/Result.vue';
-import Welcome from '@/components/Welcome.vue';
-import { namespace as drawResultNamespace } from '@/store/modules/drawResult/index';
-import { Getter } from 'vuex-class';
+import { State, Getter } from 'vuex-class';
+import { namespace as DrawResultNamespace } from '@/store/modules/drawResult';
 
 @Component({
   components: {
-    Welcome,
-    LanguageSelector,
-    PeopleList,
+    PageHeader,
+    PageFooter,
     Drawer,
-    Result,
   },
 })
 export default class App extends Vue {
-  @Getter('hasResult', { namespace: drawResultNamespace })
+  @Getter('hasResult', { namespace: DrawResultNamespace })
   public hasResult!: boolean;
 
   public created() {
@@ -41,4 +42,43 @@ export default class App extends Vue {
 
 <style lang="less">
 @import "App.less";
+</style>
+
+<style lang="less" scoped>
+#app {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+#page-content {
+  margin-top: 120px;
+}
+#page-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.sneaky-santa {
+  width: 100px;
+  position: absolute;
+  transform: rotateZ(90deg) translateY(100%);
+  animation: sneaky-santa-data-v-7ba5bd90 18s 1s
+    cubic-bezier(0.18, 0.89, 0.32, 1.28) infinite;
+}
+
+@keyframes sneaky-santa {
+  0% {
+    transform: rotateZ(90deg) translateY(55%);
+  }
+  2%,
+  50% {
+    transform: rotateZ(90deg) translateY(10%);
+  }
+  54%,
+  100% {
+    transform: rotateZ(90deg) translateY(55%);
+  }
+}
 </style>

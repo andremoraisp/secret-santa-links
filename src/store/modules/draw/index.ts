@@ -7,34 +7,46 @@ export const namespace: string = 'Draw';
 export const Draw: Module<DrawState, {}> = {
     namespaced: true,
     state: {
-        lastIndex: 0,
         people: [],
         pairedPeople: [],
-        isListComplete: false,
         isDrawDone: false,
+        hasDuplicateNames: false,
     },
     mutations: {
-        addNewPerson(state): void {
-            state.people.push(new Person(++state.lastIndex));
-        },
-        updatePerson(state, payload: Person): void {
-            const person = state.people.find((p) => p.Id === payload.Id);
-            if (person) {
-                person.updateData(payload);
+        setPeople(state, payload: { peopleNames: string | null }): void {
+            state.people = [];
+            state.pairedPeople = [];
+            state.isDrawDone = false;
+            state.hasDuplicateNames = false;
+            if (payload.peopleNames) {
+                const lines = payload.peopleNames.split('\n');
+                let id = 0;
+                const nameCounts: { [name: string]: boolean } = {};
+                for (const line of lines) {
+                    if (line && line.trim() !== '') {
+                        state.people.push(new Person(++id, line));
+                        if (nameCounts[line]) {
+                            state.hasDuplicateNames = true;
+                        }
+                        nameCounts[line] = true;
+                    }
+                }
             }
         },
-        removePerson(state, payload: Person): number {
-            const personIndex = state.people.indexOf(payload);
-            if (personIndex > -1) {
-                state.people.splice(personIndex, 1);
-            }
-            return personIndex;
-        },
-        completeList(state): void {
-            state.isListComplete = true;
+        setResult(state, payload: { pairedPeople: PairedPerson[] }): void {
+            state.pairedPeople = payload.pairedPeople;
+            state.isDrawDone = true;
         },
     },
     actions: {
+        setPeopleAndDraw(context, payload: { peopleNames: string | null }): Promise<any> {
+            context.commit('setPeople', payload);
+            if (!context.state.hasDuplicateNames) {
+                return context.dispatch('startDraw');
+            } else {
+                return Promise.resolve();
+            }
+        },
         startDraw(context): Promise<any> {
             const randomizationPromise = new Promise<PairedPerson[]>((resolve, reject) => {
                 const peopleCount = context.state.people.length;
@@ -59,8 +71,7 @@ export const Draw: Module<DrawState, {}> = {
             });
             const stateChangePromise = randomizationPromise.then(
                 (result) => {
-                    context.state.pairedPeople = result;
-                    context.state.isDrawDone = true;
+                    context.commit('setResult', { pairedPeople: result });
                 },
             );
             return stateChangePromise;

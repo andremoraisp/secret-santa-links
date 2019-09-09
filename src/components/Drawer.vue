@@ -1,18 +1,25 @@
 <template>
-  <div>
-    <button @click="completeList()">{{$t('drawer.button.completeList')}}</button>
-    <button @click="startDraw()">{{$t('drawer.button.startDraw')}}</button>
-    <div class="draw-result">
-      <div v-if="isDrawDone">
-        <span>Done!</span>
-        <div v-for="(pair, index) in pairedPeople" :key="index">
-          <div>{{ pair.originPerson.Name }}</div>
-          <div>
-            <a :href="buildLink(pair)" target="_blank">{{ buildLink(pair) }}</a>
-          </div>
-        </div>
-      </div>
+  <div class="drawer-container">
+    <div class="instructions">
+      <p>Hi.</p>
+      <p>Let's create our people list.</p>
+      <p>Type the name of the participants below, one per line:</p>
     </div>
+    <div>
+      <textarea
+        class="input-names"
+        v-model="peopleNamesStr"
+        placeholder="Names here,
+one per line"
+      />
+    </div>
+    <div class="btn-draw-container">
+      <button class="btn-draw" @click="onDrawNamesClicked">
+        <img src="/svg/039-sock.svg" />
+        <span>Draw names!</span>
+      </button>
+    </div>
+    <div class="result"></div>
   </div>
 </template>
 
@@ -21,21 +28,79 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Mutation, Action, State } from 'vuex-class';
 import { Draw, namespace } from '@/store/modules/draw';
-import PairedPerson from '../models/PairedPerson';
+import PairedPerson from '@/models/PairedPerson';
 import { PairedPersonLinkfier } from '@/util/drawUtil';
 
-@Component
+@Component({
+  components: {},
+})
 export default class Drawer extends Vue {
-  @Mutation('completeList', { namespace }) public completeList!: void;
-  @Action('startDraw', { namespace }) public startDraw!: void;
-  @State('isDrawDone', { namespace }) public isDrawDone!: boolean;
-  @State('pairedPeople', { namespace }) public pairedPeople!: PairedPerson[];
+  public peopleNamesStr: string | null = null;
 
-  public buildLink(pair: PairedPerson): string {
-    return PairedPersonLinkfier.getUrl(pair);
+  public onDrawNamesClicked(event: MouseEvent) {
+    this.$store.dispatch(`${namespace}/setPeopleAndDraw`, {
+      peopleNames: this.peopleNamesStr,
+    });
   }
 }
 </script>
 
 <style lang="less" scoped>
+.drawer-container {
+  padding-left: 30px;
+}
+
+.instructions {
+  font-size: 2em;
+  // line-height: 80%;
+  p {
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+  }
+}
+
+.input-names {
+  width: 300px;
+  height: 300px;
+  resize: none;
+}
+
+.btn-draw-container {
+  margin-top: 15px;
+}
+
+.btn-draw {
+  border: none;
+  background-color: #61c6ad;
+  padding: 15px;
+  font-size: 1.5em;
+  border-radius: 0.7em;
+  box-shadow: 0px 3px 6px 0px #00000029;
+
+  &:hover,
+  &:active {
+    cursor: pointer;
+    img {
+      animation: sock-shake 0.1s alternate infinite;
+    }
+  }
+
+  img {
+    height: 40px;
+    transform: rotateZ(-15deg);
+  }
+  span {
+    position: relative;
+    bottom: 0.3em;
+  }
+}
+
+@keyframes sock-shake {
+  from {
+    transform: rotateZ(-5deg);
+  }
+  to {
+    transform: rotateZ(5deg);
+  }
+}
 </style>
