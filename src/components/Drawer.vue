@@ -19,7 +19,6 @@ one per line"
         <span>Draw names!</span>
       </button>
     </div>
-    <div class="result"></div>
   </div>
 </template>
 
@@ -61,8 +60,7 @@ export default class Drawer extends Vue {
 
 .input-names {
   width: 300px;
-  height: 300px;
-  resize: none;
+  height: 200px;
 }
 
 .btn-draw-container {

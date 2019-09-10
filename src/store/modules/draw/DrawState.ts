@@ -6,4 +6,5 @@ export default interface DrawState {
     pairedPeople: PairedPerson[];
     isDrawDone: boolean;
     hasDuplicateNames: boolean;
+    isDrawing: boolean;
 }

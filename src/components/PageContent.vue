@@ -4,10 +4,9 @@
       <img class="sneaky-santa" src="/svg/santa-claus.svg" />
     </div>
     <div id="page-content">
-      <template v-if="hasResult"></template>
-      <template v-else>
-        <Drawer />
-      </template>
+      <Drawer class="drawer" v-show="!isDrawing && !isDrawDone" />
+      <Loader class="loader" v-show="isDrawing" :text="'Drawing names...'" />
+      <Result class="result" v-show="!isDrawing && isDrawDone" />
     </div>
   </div>
 </template>
@@ -15,13 +14,22 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Drawer from '@/components/Drawer.vue';
+import Loader from '@/components/loader/Loader.vue';
+import Result from '@/components/Result.vue';
 import { namespace as DrawResultNamespace } from '@/store/modules/drawResult';
+import { namespace as DrawNamespace } from '@/store/modules/draw';
 import { Getter } from 'vuex-class';
 
 @Component({
-  components: { Drawer },
+  components: { Drawer, Loader, Result },
 })
 export default class PageContent extends Vue {
+  @Getter('isDrawing', { namespace: DrawNamespace })
+  public isDrawing!: boolean;
+
+  @Getter('isDrawDone', { namespace: DrawNamespace })
+  public isDrawDone!: boolean;
+
   @Getter('hasResult', { namespace: DrawResultNamespace })
   public hasResult!: boolean;
 }
@@ -33,6 +41,11 @@ export default class PageContent extends Vue {
 }
 #page-content {
   margin-top: 120px;
+  position: relative;
+}
+
+.loader {
+  margin-left: 30px;
 }
 
 .sneaky-santa {

@@ -11,6 +11,12 @@ export const Draw: Module<DrawState, {}> = {
         pairedPeople: [],
         isDrawDone: false,
         hasDuplicateNames: false,
+        isDrawing: false,
+    },
+    getters: {
+        isDrawing: (state) => state.isDrawing,
+        isDrawDone: (state) => state.isDrawDone,
+        pairedPeople: (state) => state.pairedPeople,
     },
     mutations: {
         setPeople(state, payload: { peopleNames: string | null }): void {
@@ -34,20 +40,27 @@ export const Draw: Module<DrawState, {}> = {
             }
         },
         setResult(state, payload: { pairedPeople: PairedPerson[] }): void {
-            state.pairedPeople = payload.pairedPeople;
+            state.pairedPeople = payload.pairedPeople.sort((a, b) => a.originPerson.Id - b.originPerson.Id);
             state.isDrawDone = true;
+        },
+        setDrawing(state, payload: { isDrawing: boolean }): void {
+            state.isDrawing = payload.isDrawing;
         },
     },
     actions: {
         setPeopleAndDraw(context, payload: { peopleNames: string | null }): Promise<any> {
+            context.commit('setDrawing', { isDrawing: true });
             context.commit('setPeople', payload);
             if (!context.state.hasDuplicateNames) {
-                return context.dispatch('startDraw');
+                function commitDrawing() { context.commit('setDrawing', { isDrawing: false }); }
+                const drawPromise = context.dispatch('doDraw');
+                const timePromise = new Promise((resolve) => { setTimeout(resolve, 3000); });
+                return Promise.all([drawPromise, timePromise]).then(commitDrawing).catch(commitDrawing);
             } else {
                 return Promise.resolve();
             }
         },
-        startDraw(context): Promise<any> {
+        doDraw(context): Promise<any> {
             const randomizationPromise = new Promise<PairedPerson[]>((resolve, reject) => {
                 const peopleCount = context.state.people.length;
                 const ids = context.state.people.map((p) => p.Id);
