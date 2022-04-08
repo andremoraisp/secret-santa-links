@@ -5,22 +5,19 @@
         Made by
         <strong>André Morais Pompermayer</strong>
       </span>
-      <a href="https://www.linkedin.com/in/andrepompermayer/" target="_blank">
+      <a href="https://www.linkedin.com/in/andrepompermayer/" target="_blank" rel="noopener">
         <i class="fab fa-linkedin"></i> LinkedIn
       </a>
-      <a href="https://github.com/andremoraisp/secret-santa-links" target="_blank">
+      <a href="https://github.com/andremoraisp/secret-santa-links" target="_blank" rel="noopener">
         <i class="fab fa-github"></i> GitHub
       </a>
     </div>
     <div class="right">
       <div class="icons-reference">
         Icons made by
-        <a
-          href="https://www.flaticon.com/authors/freepik"
-          title="Freepik"
-          target="_blank"
-        >Freepik</a> from
-        <a href="https://www.flaticon.com/" title="Flaticon" target="_blank">www.flaticon.com</a>
+        <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank" rel="noopener">Freepik</a>
+        from
+        <a href="https://www.flaticon.com/" title="Flaticon" target="_blank" rel="noopener">www.flaticon.com</a>
       </div>
     </div>
   </footer>
