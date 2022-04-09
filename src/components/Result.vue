@@ -21,6 +21,3 @@ export default class Result extends Vue {
   }
 }
 </script>
-
-<style lang="less" scoped>
-</style>

@@ -40,7 +40,9 @@ export const Draw: Module<DrawState, {}> = {
             }
         },
         setResult(state, payload: { pairedPeople: PairedPerson[] }): void {
-            state.pairedPeople = payload.pairedPeople.sort((a, b) => a.originPerson.Id - b.originPerson.Id);
+            const pairedPeople = payload.pairedPeople;
+            pairedPeople.sort((a, b) => a.originPerson.Id - b.originPerson.Id);
+            state.pairedPeople =  pairedPeople;
             state.isDrawDone = true;
         },
         setDrawing(state, payload: { isDrawing: boolean }): void {
@@ -61,7 +63,7 @@ export const Draw: Module<DrawState, {}> = {
             }
         },
         doDraw(context): Promise<any> {
-            const randomizationPromise = new Promise<PairedPerson[]>((resolve, reject) => {
+            const randomizationPromise = new Promise<PairedPerson[]>((resolve) => {
                 const peopleCount = context.state.people.length;
                 const ids = context.state.people.map((p) => p.Id);
                 const randomized: number[] = [];

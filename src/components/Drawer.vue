@@ -23,12 +23,12 @@ one per line"
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import { Mutation, Action, State } from 'vuex-class';
-import { Draw, namespace } from '@/store/modules/draw';
-import PairedPerson from '@/models/PairedPerson';
-import { PairedPersonLinkfier } from '@/util/drawUtil';
+import Vue from "vue";
+import Component from "vue-class-component";
+import { Mutation, Action, State } from "vuex-class";
+import { Draw, namespace } from "@/store/modules/draw";
+import PairedPerson from "@/models/PairedPerson";
+import { PairedPersonLinkfier } from "@/util/drawUtil";
 
 @Component({
   components: {},
@@ -36,7 +36,7 @@ import { PairedPersonLinkfier } from '@/util/drawUtil';
 export default class Drawer extends Vue {
   public peopleNamesStr: string | null = null;
 
-  public onDrawNamesClicked(event: MouseEvent) {
+  public onDrawNamesClicked() {
     this.$store.dispatch(`${namespace}/setPeopleAndDraw`, {
       peopleNames: this.peopleNamesStr,
     });
