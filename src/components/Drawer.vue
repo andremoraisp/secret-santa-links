@@ -15,7 +15,7 @@ one per line"
     </div>
     <div class="btn-draw-container">
       <button class="btn-draw" @click="onDrawNamesClicked">
-        <img src="/svg/039-sock.svg" />
+        <img src="/svg/039-sock.svg" alt="Christmas sock" />
         <span>Draw names!</span>
       </button>
     </div>

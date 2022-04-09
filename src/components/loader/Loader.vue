@@ -5,7 +5,7 @@
       <div class="ground"></div>
       <Mountains class="lay-on-ground" />
       <Trees class="lay-on-ground" />
-      <img class="sled lay-on-ground" src="/svg/048-sled.svg" />
+      <img class="sled lay-on-ground" src="/svg/048-sled.svg" alt="Sled" />
     </div>
   </div>
 </template>

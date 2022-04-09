@@ -1,7 +1,7 @@
 <template>
   <div id="page-middle">
     <div>
-      <img class="sneaky-santa" src="/svg/santa-claus.svg" />
+      <img class="sneaky-santa" src="/svg/santa-claus.svg" alt="Santa Claus" />
     </div>
     <div id="page-content">
       <Drawer class="drawer" v-show="!isDrawing && !isDrawDone" />

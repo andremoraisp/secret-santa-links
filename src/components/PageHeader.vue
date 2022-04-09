@@ -2,10 +2,10 @@
   <div class="header-container">
     <div class="header-title font-christmas">Secret Santa</div>
     <div class="toys">
-      <img class="globe" src="/svg/035-snow-globe.svg" width="50" />
-      <img class="sled" src="/svg/048-sled.svg" width="50" />
-      <img class="wreath" src="/svg/034-christmas-wreath.svg" width="60" />
-      <img class="gift" src="/svg/011-gift.svg" width="50" />
+      <img class="globe" src="/svg/035-snow-globe.svg" width="50" alt="Snow globe" />
+      <img class="sled" src="/svg/048-sled.svg" width="50" alt="Sled" />
+      <img class="wreath" src="/svg/034-christmas-wreath.svg" width="60" alt="Wreath" />
+      <img class="gift" src="/svg/011-gift.svg" width="50" alt="Gift package" />
     </div>
   </div>
 </template>
